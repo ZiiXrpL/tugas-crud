@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    // kolom yang boleh di-isi
     protected $fillable = [
         'customer',
-        'totalorder',
-        'products',
+        'total_order',
+        'product_id'
     ];
 
+    // relasi ke product
     public function product()
     {
         return $this->belongsTo(Product::class);
