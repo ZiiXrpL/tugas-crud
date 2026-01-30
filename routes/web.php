@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
+
+Route::get('/order/export/pdf', [OrderController::class, 'exportPdf'])
+    ->name('order.export.pdf');
+
+
 Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 

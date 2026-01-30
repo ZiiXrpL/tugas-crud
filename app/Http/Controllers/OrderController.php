@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
+
 
 class OrderController extends Controller
 {
@@ -57,6 +61,14 @@ class OrderController extends Controller
         return redirect()->route('product.index')
             ->with('success', 'Order berhasil diupdate ✅');
     }
+    public function exportPdf()
+{
+    $orders = Order::with('product')->get();
+
+    $pdf = Pdf::loadView('order.pdf', compact('orders'));
+
+    return $pdf->download('data-order.pdf');
+}
 
     public function destroy(Order $order)
     {

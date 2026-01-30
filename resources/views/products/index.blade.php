@@ -59,6 +59,9 @@
 <div>
     <a href="{{ route('order.create') }}">Create Order</a>
 </div>
+<a href="{{ route('order.export.pdf') }}" target="_blank">
+    Export Order PDF
+</a>
 
 <table border="1" cellpadding="5">
     <tr>
