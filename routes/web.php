@@ -5,19 +5,15 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
 
-Route::get('/order/export/pdf', [OrderController::class, 'exportPdf'])
-    ->name('order.export.pdf');
-
-
-Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+Route::get('/pesan/export/pdf', [OrderController::class, 'exportPdf'])
+    ->name('pesan.export.pdf');
 
 
 Route::get('/', function () {
     return redirect()->route('product.index');
 });
 
-
+/* Product Routes */
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
 Route::post('/product', [ProductController::class, 'store'])->name('product.store');
@@ -25,9 +21,14 @@ Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name(
 Route::put('/product/{product}/update', [ProductController::class, 'update'])->name('product.update');
 Route::delete('/product/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
 
-Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+/* Order/Pesanan Routes */
+Route::get('/pesan', [OrderController::class, 'index'])->name('pesan.index');
+Route::get('/pesan/create', [OrderController::class, 'create'])->name('pesan.create');
+Route::post('/pesan/store', [OrderController::class, 'store'])->name('pesan.store');
+Route::get('/pesan/{pesan}/edit', [OrderController::class, 'edit'])->name('pesan.edit');
+Route::put('/pesan/{pesan}/update', [OrderController::class, 'update'])->name('pesan.update');
+Route::delete('/pesan/{pesan}/destroy', [OrderController::class, 'destroy'])->name('pesan.destroy');
 
-Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
-Route::put('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
-Route::delete('/order/{order}/destroy', [OrderController::class, 'destroy'])->name('order.destroy');
+Route::get('/pesan/{pesan}/edit', [OrderController::class, 'edit'])->name('pesan.edit');
+Route::put('/pesan/{pesan}/update', [OrderController::class, 'update'])->name('pesan.update');
+Route::delete('/pesan/{pesan}/destroy', [OrderController::class, 'destroy'])->name('pesan.destroy');

@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Manajemen Produk</title>
+    <title>Manajemen Pesanan</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="{{ route('product.index') }}" class="navbar-brand">Pemesanan Produk</a>
+            <a href="{{ route('product.index') }}" class="navbar-brand">📦 Aplikasi CRUD</a>
             <ul class="navbar-menu">
-                <li><a href="{{ route('product.index') }}" class="active">Produk</a></li>
-                <li><a href="{{ route('pesan.index') }}">Pesanan</a></li>
+                <li><a href="{{ route('product.index') }}">Produk</a></li>
+                <li><a href="{{ route('pesan.index') }}" class="active">Pesanan</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="container">
-        <!-- Products Section -->
+        <!-- Orders Section -->
         <div class="section">
             <div class="page-header">
-                <h1>📦 Manajemen Produk</h1>
+                <h1>📋 Manajemen Pesanan</h1>
             </div>
 
             @if(session()->has('success'))
@@ -33,7 +33,8 @@
             @endif
 
             <div class="button-group">
-                <a href="{{ route('product.create') }}" class="btn btn-primary">+ Tambah Produk Baru</a>
+                <a href="{{ route('pesan.create') }}" class="btn btn-primary">+ Buat Pesanan Baru</a>
+                <a href="{{ route('pesan.export.pdf') }}" target="_blank" class="btn btn-export">📥 Export PDF</a>
             </div>
 
             <div class="table-container">
@@ -41,26 +42,24 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nama</th>
-                            <th>Qty</th>
-                            <th>Harga</th>
-                            <th>Deskripsi</th>
+                            <th>Pelanggan</th>
+                            <th>Produk</th>
+                            <th>Total Pesanan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if($products->count())
-                            @foreach($products as $product)
+                        @if($orders->count())
+                            @foreach($orders as $order)
                             <tr>
-                                <td>#{{ $product->id }}</td>
-                                <td><strong>{{ $product->name }}</strong></td>
-                                <td>{{ $product->qty }}</td>
-                                <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
-                                <td>{{ Str::limit($product->description, 50) }}</td>
+                                <td>#{{ $order->id }}</td>
+                                <td><strong>{{ $order->customer }}</strong></td>
+                                <td>{{ $order->product->name }}</td>
+                                <td>Rp {{ number_format($order->total_order, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="{{ route('product.edit', ['product' => $product]) }}" class="btn btn-warning">Edit</a>
-                                        <form method="POST" action="{{ route('product.destroy', ['product' => $product]) }}" style="margin: 0;">
+                                        <a href="{{ route('pesan.edit', ['pesan' => $order]) }}" class="btn btn-warning">Edit</a>
+                                        <form method="POST" action="{{ route('pesan.destroy', ['pesan' => $order]) }}" style="margin: 0;">
                                             @csrf
                                             @method('delete')
                                             <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
@@ -71,7 +70,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="6" style="text-align: center; padding: 30px;">Tidak ada produk</td>
+                                <td colspan="5" style="text-align: center; padding: 30px;">Tidak ada pesanan</td>
                             </tr>
                         @endif
                     </tbody>

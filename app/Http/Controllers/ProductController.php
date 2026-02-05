@@ -12,10 +12,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        $orders = Order::with('product')->get();
-        return view('products.index', ['products'=>$products],['orders'=>$orders]);
-        // return view('products.index', ['products'=>$products , 'orders'=>$orders]);
-
+        return view('products.index', ['products'=>$products]);
     }
     public function create()
     {

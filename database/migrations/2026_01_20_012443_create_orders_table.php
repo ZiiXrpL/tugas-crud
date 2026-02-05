@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('customer');
             $table->integer('total_order');
             $table->foreignId('product_id')
-          ->constrained('products');
+                ->constrained('products')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

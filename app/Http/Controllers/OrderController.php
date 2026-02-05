@@ -12,10 +12,16 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Order::with('product')->get();
+        return view('pesan.index', compact('orders'));
+    }
+
     public function create()
     {
         $products = Product::all();
-        return view('order.create', compact('products'));
+        return view('pesan.create', compact('products'));
     }
 
     public function store(Request $request)
@@ -33,14 +39,14 @@ class OrderController extends Controller
             'total_order' => $product->price,
         ]);
 
-        return redirect()->route('product.index')
-            ->with('success', 'Order berhasil dibuat 🎉');
+        return redirect()->route('pesan.index')
+            ->with('success', 'Order berhasil dibuat ');
     }
 
     public function edit(Order $order)
     {
         $products = Product::all();
-        return view('order.edit', compact('order', 'products'));
+        return view('pesan.edit', compact('order', 'products'));
     }
 
     public function update(Request $request, Order $order)
@@ -58,14 +64,14 @@ class OrderController extends Controller
             'total_order' => $product->price,
         ]);
 
-        return redirect()->route('product.index')
-            ->with('success', 'Order berhasil diupdate ✅');
+        return redirect()->route('pesan.index')
+            ->with('success', 'Order berhasil diupdate');
     }
     public function exportPdf()
 {
     $orders = Order::with('product')->get();
 
-    $pdf = Pdf::loadView('order.pdf', compact('orders'));
+    $pdf = Pdf::loadView('pesan.pdf', compact('orders'));
 
     return $pdf->download('data-order.pdf');
 }
@@ -74,7 +80,7 @@ class OrderController extends Controller
     {
         $order->delete();
 
-        return redirect()->route('product.index')
-            ->with('success', 'Order berhasil dihapus 🗑️');
+        return redirect()->route('pesan.index')
+            ->with('success', 'Pesanan berhasil dihapus 🗑️');
     }
 }
